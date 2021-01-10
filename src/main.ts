@@ -2,7 +2,10 @@ import * as core from '@actions/core'
 import AWS, {Kinesis} from 'aws-sdk'
 
 const API_VERSION = '2013-12-02'
-const kinesis = new Kinesis({apiVersion: API_VERSION})
+const kinesis = new Kinesis({
+  apiVersion: API_VERSION,
+  region: core.getInput('AWS_REGION')
+})
 
 const setAWSCredentials = () => {
   AWS.config.credentials = {
