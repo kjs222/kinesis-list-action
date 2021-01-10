@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import AWS, {Kinesis} from 'aws-sdk'
 
-const API_VERSION = '2012-12-03'
+const API_VERSION = '2013-12-02'
 const kinesis = new Kinesis({apiVersion: API_VERSION})
 
 const setAWSCredentials = () => {
