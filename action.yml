@@ -6,6 +6,9 @@ inputs:
     required: false
     description: 'input description here'
     default: 'default value if applicable'
+  match:
+    required: false
+    description: 'filter stream names matching a pattern'
 runs:
   using: 'node12'
   main: 'dist/index.js'

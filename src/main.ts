@@ -1,18 +1,6 @@
 import * as core from '@actions/core'
 import AWS, {Kinesis} from 'aws-sdk'
 
-// AWS.config.credentials = {
-//   accessKeyId: core.getInput('AWS_ACCESS_KEY_ID'),
-//   secretAccessKey: core.getInput('AWS_SECRET_ACCESS_KEY')
-// }
-
-// if (!AWS.config.region) {
-//   core.debug(`setting a region: ${core.getInput('AWS_REGION')}`)
-//   AWS.config.update({
-//     region: core.getInput('AWS_REGION')
-//   })
-// }
-
 const kinesis = new Kinesis({
   apiVersion: '2013-12-02'
 })
@@ -41,6 +29,7 @@ async function listAllStreams(): Promise<string[]> {
   let streamNames: string[] = []
   let exclusiveStartStreamName
   while (hasMoreStreams) {
+    core.debug(`requestCount: ${requestCount}`)
     if (requestCount && requestCount % 5 === 0) {
       core.debug(`Waiting 1000 milliseconds due to AWS request limits`)
       await wait(1000)
@@ -62,7 +51,12 @@ async function listAllStreams(): Promise<string[]> {
 
 async function run(): Promise<void> {
   try {
-    const streamNames = await listAllStreams()
+    let streamNames = await listAllStreams()
+    if (core.getInput('match')) {
+      streamNames = streamNames.filter(sName =>
+        sName.includes(core.getInput('match'))
+      )
+    }
     core.setOutput('streamNames', streamNames.join(', '))
   } catch (error) {
     core.setFailed(error.message)
