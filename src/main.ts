@@ -1,11 +1,6 @@
 import * as core from '@actions/core'
 import AWS, {Kinesis} from 'aws-sdk'
 
-const API_VERSION = '2013-12-02'
-const kinesis = new Kinesis({
-  apiVersion: API_VERSION
-})
-
 const setAWSCredentials = () => {
   AWS.config.credentials = {
     accessKeyId: core.getInput('AWS_ACCESS_KEY_ID'),
@@ -13,11 +8,19 @@ const setAWSCredentials = () => {
   }
 
   if (!AWS.config.region) {
+    core.debug(`setting a region: ${core.getInput('AWS_REGION')}`)
     AWS.config.update({
       region: core.getInput('AWS_REGION')
     })
   }
 }
+
+setAWSCredentials()
+
+const API_VERSION = '2013-12-02'
+const kinesis = new Kinesis({
+  apiVersion: API_VERSION
+})
 
 async function listStreams(
   exclusiveStartStreamName: string | undefined
@@ -64,7 +67,6 @@ async function listAllStreams(): Promise<string[]> {
 
 async function run(): Promise<void> {
   try {
-    setAWSCredentials()
     const streamNames = await listAllStreams()
     core.setOutput('streamNames', streamNames.join(', '))
   } catch (error) {
