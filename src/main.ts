@@ -8,10 +8,9 @@ const kinesis = new Kinesis({
 async function listStreams(
   exclusiveStartStreamName: string | undefined
 ): Promise<Kinesis.ListStreamsOutput> {
-  const params: any = {Limit: 2}
+  const params: any = {}
   if (exclusiveStartStreamName) {
     params.ExclusiveStartStreamName = exclusiveStartStreamName
-    core.debug(`setting a start name: ${params.ExclusiveStartStreamName}`)
   }
 
   return kinesis.listStreams(params).promise()
@@ -29,9 +28,7 @@ async function listAllStreams(): Promise<string[]> {
   let streamNames: string[] = []
   let exclusiveStartStreamName
   while (hasMoreStreams) {
-    core.debug(`requestCount: ${requestCount}`)
     if (requestCount && requestCount % 5 === 0) {
-      core.debug(`Waiting 1000 milliseconds due to AWS request limits`)
       await wait(1000)
     }
     let result: Kinesis.ListStreamsOutput = await listStreams(
