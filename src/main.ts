@@ -8,7 +8,7 @@ const kinesis = new Kinesis({
 async function listStreams(
   exclusiveStartStreamName: string | undefined
 ): Promise<Kinesis.ListStreamsOutput> {
-  const params: any = {}
+  const params: any = {Limit: 5}
   if (exclusiveStartStreamName) {
     params.ExclusiveStartStreamName = exclusiveStartStreamName
     core.debug(`setting a start name: ${params.ExclusiveStartStreamName}`)
