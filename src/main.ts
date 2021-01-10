@@ -3,14 +3,19 @@ import AWS, {Kinesis} from 'aws-sdk'
 
 const API_VERSION = '2013-12-02'
 const kinesis = new Kinesis({
-  apiVersion: API_VERSION,
-  region: core.getInput('AWS_REGION')
+  apiVersion: API_VERSION
 })
 
 const setAWSCredentials = () => {
   AWS.config.credentials = {
     accessKeyId: core.getInput('AWS_ACCESS_KEY_ID'),
     secretAccessKey: core.getInput('AWS_SECRET_ACCESS_KEY')
+  }
+
+  if (!AWS.config.region) {
+    AWS.config.update({
+      region: core.getInput('AWS_REGION')
+    })
   }
 }
 
