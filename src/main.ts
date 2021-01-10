@@ -1,17 +1,17 @@
 import * as core from '@actions/core'
 import AWS, {Kinesis} from 'aws-sdk'
 
-AWS.config.credentials = {
-  accessKeyId: core.getInput('AWS_ACCESS_KEY_ID'),
-  secretAccessKey: core.getInput('AWS_SECRET_ACCESS_KEY')
-}
+// AWS.config.credentials = {
+//   accessKeyId: core.getInput('AWS_ACCESS_KEY_ID'),
+//   secretAccessKey: core.getInput('AWS_SECRET_ACCESS_KEY')
+// }
 
-if (!AWS.config.region) {
-  core.debug(`setting a region: ${core.getInput('AWS_REGION')}`)
-  AWS.config.update({
-    region: core.getInput('AWS_REGION')
-  })
-}
+// if (!AWS.config.region) {
+//   core.debug(`setting a region: ${core.getInput('AWS_REGION')}`)
+//   AWS.config.update({
+//     region: core.getInput('AWS_REGION')
+//   })
+// }
 
 const kinesis = new Kinesis({
   apiVersion: '2013-12-02'
