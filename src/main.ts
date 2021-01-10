@@ -1,25 +1,20 @@
 import * as core from '@actions/core'
 import AWS, {Kinesis} from 'aws-sdk'
 
-const setAWSCredentials = () => {
-  AWS.config.credentials = {
-    accessKeyId: core.getInput('AWS_ACCESS_KEY_ID'),
-    secretAccessKey: core.getInput('AWS_SECRET_ACCESS_KEY')
-  }
-
-  if (!AWS.config.region) {
-    core.debug(`setting a region: ${core.getInput('AWS_REGION')}`)
-    AWS.config.update({
-      region: core.getInput('AWS_REGION')
-    })
-  }
+AWS.config.credentials = {
+  accessKeyId: core.getInput('AWS_ACCESS_KEY_ID'),
+  secretAccessKey: core.getInput('AWS_SECRET_ACCESS_KEY')
 }
 
-setAWSCredentials()
+if (!AWS.config.region) {
+  core.debug(`setting a region: ${core.getInput('AWS_REGION')}`)
+  AWS.config.update({
+    region: core.getInput('AWS_REGION')
+  })
+}
 
-const API_VERSION = '2013-12-02'
 const kinesis = new Kinesis({
-  apiVersion: API_VERSION
+  apiVersion: '2013-12-02'
 })
 
 async function listStreams(
