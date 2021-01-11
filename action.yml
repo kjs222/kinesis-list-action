@@ -1,14 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Kinesis Stream List'
+description: 'Outputs a list of kinesis streams'
+author: 'Kerry Sheldon'
 inputs:
-  sample:
-    required: false
-    description: 'input description here'
-    default: 'default value if applicable'
   match:
     required: false
     description: 'filter stream names matching a pattern'
+outputs:
+  streamNames: # id of the output
+    description: 'A comma separated list of stream names (matching pattern if provided)'
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -54,7 +54,7 @@ async function run(): Promise<void> {
         sName.includes(core.getInput('match'))
       )
     }
-    core.setOutput('streamNames', streamNames.join(', '))
+    core.setOutput('streamNames', streamNames.join(','))
   } catch (error) {
     core.setFailed(error.message)
   }
