@@ -1,7 +1,7 @@
 on: [push]
 
 jobs:
-  test_linux:
+  test_local:
     runs-on: ubuntu-latest
     name: test
     env:
@@ -13,5 +13,19 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         uses: ./
+        with:
+          match: '1'
+  test_published:
+    runs-on: ubuntu-latest
+    name: test
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        uses: kjs222/kinesis-list-action@v0.1
         with:
           match: '1'
