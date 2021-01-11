@@ -3,7 +3,7 @@ on: [push]
 jobs:
   test_local:
     runs-on: ubuntu-latest
-    name: test
+    name: test-local
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -17,7 +17,7 @@ jobs:
           match: '1'
   test_published:
     runs-on: ubuntu-latest
-    name: test
+    name: test-published
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
