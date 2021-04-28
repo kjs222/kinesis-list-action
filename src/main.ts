@@ -54,6 +54,11 @@ async function run(): Promise<void> {
         sName.includes(core.getInput('match'))
       )
     }
+    if (core.getInput('exlude')) {
+      streamNames = streamNames.filter(sName =>
+        !sName.includes(core.getInput('exclude'))
+      )
+    }
     core.setOutput('streamNames', streamNames.join(','))
   } catch (error) {
     core.setFailed(error.message)
