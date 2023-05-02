@@ -9,5 +9,5 @@ outputs:
   streamNames: # id of the output
     description: 'A comma separated list of stream names (matching pattern if provided)'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
